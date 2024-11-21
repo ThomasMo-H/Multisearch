@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intégration des Moteurs de Recherche</title>
+    <title>MultiSearchPage</title>
     <style>
  body.light-mode, body.dark-mode {
     font-family: Arial, sans-serif;
@@ -108,13 +108,13 @@ body.dark-mode .search-engine {
 </head>
 <body class="light-mode">
     <div class="container">
-        <button class="mode-switch" onclick="toggleMode()">Passer en mode sombre</button>
+        <button class="mode-switch" onclick="toggleMode()">Dark Mode</button>
         <div class="search-engine">
-            <h2>Rechercher</h2>
+            <h2>Search</h2>
             <form id="searchForm" action="https://www.google.com/search" method="get">
                 <input type="text" name="q" id="searchInput" placeholder="Rechercher" required>
             </form>
-            <h3>Moteurs de Recherche</h3>
+            <h3>Search engines</h3>
             <div class="icon-container">
                 <label>
                     <input type="checkbox" value="google" onclick="toggleEngineSelection('google')">
@@ -133,7 +133,7 @@ body.dark-mode .search-engine {
                     <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" title="DuckDuckGo" onclick="setSearchEngine('duckduckgo')">
                 </label>
             </div>
-            <h3>Outils IA</h3>
+            <h3>AI</h3>
             <div class="icon-container">
                 <label>
                     <input type="checkbox" value="chatgpt" onclick="toggleEngineSelection('chatgpt')">
@@ -152,7 +152,7 @@ body.dark-mode .search-engine {
                     <img src="https://img.icons8.com/?size=100&id=emezZ8DDFo8A&format=png&color=000000" alt="Copilot" title="Copilot" onclick="setSearchEngine('copilot')">
                 </label>
             </div>
-            <h3>Applications</h3>
+            <h3>Apps</h3>
             <div class="icon-container">
                 <label>
                     <input type="checkbox" value="maps" onclick="toggleEngineSelection('maps')">
@@ -282,7 +282,7 @@ body.dark-mode .search-engine {
                         url = `https://www.gemini.com/search?q=${encodeURIComponent(query)}`;
                         break;
                     case 'copilot':
-                        url = `https://copilot.github.com/search?q=${encodeURIComponent(query)}`;
+                        url = `hhttps://copilot.microsoft.com/chats/${encodeURIComponent(query)}`;
                         break;
                     case 'maps':
                         url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;

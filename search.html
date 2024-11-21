@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration des Moteurs de Recherche</title>
+    <style>
+ body.light-mode, body.dark-mode {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Assure que le contenu est bien centré verticalement */
+    height: 100vh; /* Assure que l'écran est couvert */
+    box-sizing: border-box;
+}
+
+.container {
+    margin-top: 0; /* Supprime la marge pour recentrer verticalement */
+    padding: 20px; /* Assure un espace uniforme autour de l'élément */
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+body.dark-mode .search-engine {
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+        .search-engine {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode .search-engine {
+            background-color: #2c2c2c;
+            color: #f0f0f0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .search-engine h2 {
+            margin-bottom: 10px;
+        }
+        .search-engine form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-engine input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        body.dark-mode .search-engine input[type="text"] {
+            background-color: #3a3a3a;
+            color: #f0f0f0;
+            border: 1px solid #555;
+        }
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .icon-container label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .icon-container img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+        .icon-container input[type="checkbox"] {
+            display: none;
+        }
+        .icon-container input[type="checkbox"]:checked + img {
+            border: 2px solid #007BFF;
+            border-radius: 4px;
+        }
+        body.dark-mode .icon-container input[type="checkbox"]:checked + img {
+            border: 2px solid #f0f0f0;
+        }
+        .mode-switch {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .mode-switch:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <button class="mode-switch" onclick="toggleMode()">Passer en mode sombre</button>
+        <div class="search-engine">
+            <h2>Rechercher</h2>
+            <form id="searchForm" action="https://www.google.com/search" method="get">
+                <input type="text" name="q" id="searchInput" placeholder="Rechercher" required>
+            </form>
+            <h3>Moteurs de Recherche</h3>
+            <div class="icon-container">
+                <label>
+                    <input type="checkbox" value="google" onclick="toggleEngineSelection('google')">
+                    <img src="https://www.google.com/favicon.ico" alt="Google" title="Google" onclick="setSearchEngine('google')">
+                </label>
+                <label>
+                    <input type="checkbox" value="bing" onclick="toggleEngineSelection('bing')">
+                    <img src="https://www.bing.com/favicon.ico" alt="Bing" title="Bing" onclick="setSearchEngine('bing')">
+                </label>
+                <label>
+                    <input type="checkbox" value="ecosia" onclick="toggleEngineSelection('ecosia')">
+                    <img src="https://www.ecosia.org/favicon.ico" alt="Ecosia" title="Ecosia" onclick="setSearchEngine('ecosia')">
+                </label>
+                <label>
+                    <input type="checkbox" value="duckduckgo" onclick="toggleEngineSelection('duckduckgo')">
+                    <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" title="DuckDuckGo" onclick="setSearchEngine('duckduckgo')">
+                </label>
+            </div>
+            <h3>Outils IA</h3>
+            <div class="icon-container">
+                <label>
+                    <input type="checkbox" value="chatgpt" onclick="toggleEngineSelection('chatgpt')">
+                    <img src="https://chat.openai.com/favicon.ico" alt="ChatGPT" title="ChatGPT" onclick="setSearchEngine('chatgpt')">
+                </label>
+                <label>
+                    <input type="checkbox" value="perplexity" onclick="toggleEngineSelection('perplexity')">
+                    <img src="https://img.icons8.com/?size=100&id=kzJWN5jCDzpq&format=png&color=000000" alt="Perplexity" title="Perplexity" onclick="setSearchEngine('perplexity')">
+                </label>
+                <label>
+                    <input type="checkbox" value="gemini" onclick="toggleEngineSelection('gemini')">
+                    <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini" title="Gemini" onclick="setSearchEngine('gemini')">
+                </label>
+                <label>
+                    <input type="checkbox" value="copilot" onclick="toggleEngineSelection('copilot')">
+                    <img src="https://img.icons8.com/?size=100&id=emezZ8DDFo8A&format=png&color=000000" alt="Copilot" title="Copilot" onclick="setSearchEngine('copilot')">
+                </label>
+            </div>
+            <h3>Applications</h3>
+            <div class="icon-container">
+                <label>
+                    <input type="checkbox" value="maps" onclick="toggleEngineSelection('maps')">
+                    <img src="https://img.icons8.com/?size=100&id=y9LJ0mNaH6XG&format=png&color=000000" alt="Google Maps" title="Google Maps" onclick="setSearchEngine('maps')">
+                </label>
+                <label>
+                    <input type="checkbox" value="youtube" onclick="toggleEngineSelection('youtube')">
+                    <img src="https://www.youtube.com/favicon.ico" alt="YouTube" title="YouTube" onclick="setSearchEngine('youtube')">
+                </label>
+                <label>
+                    <input type="checkbox" value="youtube_music" onclick="toggleEngineSelection('youtube_music')">
+                    <img src="https://music.youtube.com/favicon.ico" alt="YouTube Music" title="YouTube Music" onclick="setSearchEngine('youtube_music')">
+                </label>
+                <label>
+                    <input type="checkbox" value="amazon" onclick="toggleEngineSelection('amazon')">
+                    <img src="https://www.amazon.com/favicon.ico" alt="Amazon" title="Amazon" onclick="setSearchEngine('amazon')">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEngine = 'google';
+
+        function setSearchEngine(engine) {
+            currentEngine = engine;
+            updatePlaceholder();
+        }
+
+        function toggleEngineSelection(engine) {
+            updatePlaceholder();
+        }
+
+        function updatePlaceholder() {
+            const checkboxes = document.querySelectorAll('.icon-container input[type="checkbox"]:checked');
+            const activeEngines = Array.from(checkboxes).map(checkbox => checkbox.value.charAt(0).toUpperCase() + checkbox.value.slice(1));
+            document.getElementById('searchInput').placeholder = activeEngines.length > 0 ? activeEngines.join(', ') : 'Rechercher';
+        }
+
+        function toggleMode() {
+            const body = document.body;
+            const modeSwitchButton = document.querySelector('.mode-switch');
+            const isLightMode = body.classList.contains('light-mode');
+            if (isLightMode) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                modeSwitchButton.textContent = 'Passer en mode clair';
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                modeSwitchButton.textContent = 'Passer en mode sombre';
+            }
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const query = document.getElementById('searchInput').value;
+            const checkboxes = document.querySelectorAll('.icon-container input[type="checkbox"]:checked');
+            if (checkboxes.length > 0) {
+                checkboxes.forEach(checkbox => {
+                    const engine = checkbox.value;
+                    let url;
+                    switch (engine) {
+                        case 'google':
+                            url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'bing':
+                            url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'ecosia':
+                            url = `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'duckduckgo':
+                            url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'chatgpt':
+                            url = `https://chat.openai.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'perplexity':
+                            url = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'gemini':
+                            url = `https://www.gemini.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'copilot':
+                            url = `https://copilot.github.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        case 'maps':
+                            url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+                            break;
+                        case 'youtube':
+                            url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+                            break;
+                        case 'amazon':
+                            url = `https://www.amazon.com/s?k=${encodeURIComponent(query)}`;
+                            break;
+                        case 'youtube_music':
+                            url = `https://music.youtube.com/search?q=${encodeURIComponent(query)}`;
+                            break;
+                        default:
+                            url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    }
+                    window.open(url, '_blank');
+                });
+            } else {
+                let url;
+                switch (currentEngine) {
+                    case 'google':
+                        url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'bing':
+                        url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'ecosia':
+                        url = `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'duckduckgo':
+                        url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'chatgpt':
+                        url = `https://chat.openai.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'perplexity':
+                        url = `https://www.perplexity.ai/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'gemini':
+                        url = `https://www.gemini.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'copilot':
+                        url = `https://copilot.github.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    case 'maps':
+                        url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+                        break;
+                    case 'youtube':
+                        url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+                        break;
+                    case 'amazon':
+                        url = `https://www.amazon.com/s?k=${encodeURIComponent(query)}`;
+                        break;
+                    case 'youtube_music':
+                        url = `https://music.youtube.com/search?q=${encodeURIComponent(query)}`;
+                        break;
+                    default:
+                        url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }
+                window.open(url, '_blank');
+            }
+        });
+    </script>
+</body>
+</html>
